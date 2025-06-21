@@ -1,0 +1,60 @@
+<odoo>
+    <data>
+        <record id="hospitalme-medicine_line_view_form" model="ir.ui.view">
+            <field name="name">hospitalme.medicine.line.form</field>
+            <field name="model">hospitalme.medicine.line</field>
+            <field name="arch" type="xml">
+                <form create="0" edit="0" delete="0">
+                    <sheet>
+                        <group>
+                            <field name="medicine_id" readonly="1"/>
+                            <field name="appointment_id" readonly="1"/>
+                            <field name="doctor" readonly="1"/>
+                            <field name="patient" readonly="1"/>
+                            <field name="quantity" readonly="1"/>
+                            <field name="doze_per_day" readonly="1"/>
+                        </group>
+                    </sheet>
+
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_no_one"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="hospitalme_medicine_line_view_tree" model="ir.ui.view">
+            <field name="name">hospitalme.medicine.line.tree</field>
+            <field name="model">hospitalme.medicine.line</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="medicine_id" />
+                    <field name="appointment_id" />
+                    <field name="doctor" />
+                    <field name="patient" />
+                    <field name="quantity" />
+                    <field name="doze_per_day" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="hospitalme_medicine_line_action" model="ir.actions.act_window">
+            <field name="name">Medicine Lines</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hospitalme.medicine.line</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiline_face">
+                create your first medicine line !
+                </p>
+            </field>
+        </record>
+
+        <!-- Medicines Menu Item -->
+
+        <menuitem id="hospitalme_medicine_line_menu" name=" Medicines Tracking" sequence="10" parent="medicines_submenu_root" action="hospitalme_medicine_line_action" />
+    </data>
+</odoo>

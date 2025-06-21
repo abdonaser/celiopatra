@@ -1,0 +1,98 @@
+<odoo>
+    <record id="department_view_form" model="ir.ui.view">
+        <field name="name">hospitalme.department.form</field>
+        <field name="model">hospitalme.department</field>
+        <field name="arch" type="xml">
+            <form string="department">
+                <sheet >
+                    <div class="oe_title">
+                        <h1 class="fs-2">
+                            <label for="created_by" class="me-2"/>
+                            <field name="created_by" class="mx-3 o_required_modifier fs-3"/>
+                        </h1>
+                        <h1 class="fs-2">
+                            <label for="code" class="me-2"/>
+                            <field name="code" class="mx-3 o_required_modifier fs-5"/>
+                        </h1>
+                    </div>
+
+                    <group string="Department Details">
+                        <field name="name" placeholder="Enter department name" required="1"/>
+                    </group>
+                    <div class="d-flex align-items-center justify-content-between mb-3 p-2 rounded shadow-sm bg-light">
+                        <!-- Doctor Avatar with Label -->
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="fw-bold text-muted">Responsible Doctor:</span>
+                            <field name="responsible_doctor_id" widget="many2one_avatar_user" options="{'no_create': True, 'size': [64, 64]}" class="me-3"/>
+                        </div>
+
+                        <!-- Static Image -->
+                        <div>
+                            <field name="image_1920" widget="image" readonly="1" nolabel="1" class="rounded-circle border overflow-hidden" options="{'preview_image': 'image_1920', 'size': [100, 100]}" />
+                        </div>
+                    </div>
+
+
+                    <notebook>
+                        <!-- add the num doctors beside the page title-->
+                        <page string="👥 Doctors" name="doctors">
+                            <field name="doctors_num" string=" Number of Doctors" widget="statinfo" icon="fa-user-md" options="{'color': 'primary'}"/>
+                            <field name="doctor_ids" context="{'default_department_id': id}">
+                                <tree string="Doctors" editable="bottom" decoration-success="is_available">
+                                    <field name="image_1920" widget="image" class="doctor-avatar" options="{'preview_image': 'image_1920', 'size': [50, 50]}" />
+                                    <field name="name" placeholder="Doctor Name"/>
+                                    <field name="specialization" />
+                                    <field name="is_available" />
+                                </tree>
+                            </field>
+
+                        </page>
+
+                        <page string="📝 Description" name="description">
+                            <div class="p-3 bg-white rounded shadow-sm">
+                                <h4 class="mb-3 text-primary">
+                                    <i class="fa fa-info-circle me-2"></i>
+                                    Department Description
+                                </h4>
+                                <field name="description" placeholder="Add a detailed description about this department..." nolabel="1" widget="text" class="o_field_text w-100 border rounded p-2" style="min-height:120px; font-size:1.1em; background-color:#f8f9fa;" />
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="department_view_tree" model="ir.ui.view">
+        <field name="name">department tree</field>
+        <field name="model">hospitalme.department</field>
+        <field name="arch" type="xml">
+            <tree string="Departments">
+                <field name="image_1920" widget="image" class="oe_avatar" options="{'preview_image': 'image_1920', 'size': [45, 45]}"/>
+                <field name="name" string="Department Name"/>
+                <field name="doctors_num" string=" Doctors Count" widget="statinfo" icon="fa-user-md" options="{'color': 'primary'}"/>
+                <field name="code" string="Department Code"/>
+                <field name="responsible_doctor_id" string="Responsible Doctor"/>
+                <field name="description" widget="text" string="Description"/>
+                <field name="created_by" readonly="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="all_departments_action" model="ir.actions.act_window">
+        <field name="name">department action</field>
+        <field name="res_model">hospitalme.department</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="target">current</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smile">
+                Create your first department!
+            </p>
+        </field>
+    </record>
+
+    <!-- menu -->
+    <menuitem id="department_menu_action" name="Departments" parent="department_submenu_root" action="all_departments_action" />
+
+</odoo>

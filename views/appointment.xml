@@ -1,0 +1,131 @@
+<odoo>
+    <record id="appointment_view_form" model="ir.ui.view">
+        <field name="name">appointment.form</field>
+        <field name="model">hospitalme.appointment</field>
+        <field name="arch" type="xml">
+            <form>
+
+                <header>
+                    <button name="%(celiopatra_system.appointment_wizard_action)d" string="Change Doctor" type="action"/>
+                    <button name="%(celiopatra_system.appointment_wizard_details_action)d" string="Show Details" type="action" class="btn btn-danger"/>
+
+                    <field name="state" widget="statusbar" nolables="1" options="{'clickable':'0'}" readonly="1" />
+
+
+                    <button name="set_to_draft" string="Draft" type="object" class="btn-primary" icon="fa-pencil" invisible="state == 'draft'" help="Reset the appointment to draft state. Visible only if not already in draft." />
+
+                    <button name="set_to_scheduled" string="Schedule" type="object" class="btn-info" icon="fa-check-circle" invisible="state != 'draft'" help="Set the appointment as scheduled. Only available in draft state." />
+
+                    <button name="set_to_in_progress" string="In Progress" type="object" class="btn-secondary" icon="fa-play" invisible="state != 'scheduled'" help="Set the appointment as in progress. Only available when appointment is confirmed." />
+
+                    <button name="set_to_done" string="Mark as Done" type="object" class="btn-success" icon="fa-check" invisible="state == 'done' or state == 'cancelled' or state == 'draft' or state == 'scheduled'" help="Mark the appointment as completed. Only available if appointment is scheduled or in progress." />
+
+                    <button name="set_to_cancelled" string="Cancel" type="object" class="btn-danger" icon="fa-times" invisible="state == 'cancelled' or state == 'done'" help="Cancel this appointment. Not available if already cancelled or done." />
+
+
+
+                </header>
+
+                <sheet>
+                    <div name="button_box" class="oe_button_box">
+                        <button name="action_open_related_doctor" type="object" icon="fa-user" string="Show Doctor Details" invisible="not doctor_id" class="btn-secondary"/>
+                    </div>
+
+                    <widget name="web_ribbon" title="Canceled" bg_color="text-bg-danger" invisible="state != 'cancelled'" />
+                    <widget name="web_ribbon" title="Done" bg_color="text-bg-success" invisible="state != 'done'" />
+
+                    <div class="oe_title">
+                        <h1 class="fs-2">
+                            <label for="created_by" class="me-2"/>
+                            <field name="created_by" class="mx-3 o_required_modifier fs-3"/>
+                        </h1>
+                        <h1 class="fs-2">
+                            <label for="code" class="me-2"/>
+                            <field name="code" class="mx-3 o_required_modifier fs-5"/>
+                        </h1>
+                    </div>
+
+                    <group string="Appointment Information" class="o_group_col_6">
+                        <group>
+                            <field name="name" />
+                            <field name="date" />
+                            <field name="start_time" />
+                            <field name="end_time" />
+                        </group>
+                        <group >
+                            <field name="patient_id" />
+                            <field name="department_id" />
+                            <field name="doctor_id" domain="[('department_id', '=', department_id)]"/>
+                            <!--   <field name="symptoms" placeholder="Describe the patient's symptoms..." groups="celiopatra_system.doctor_hospital_group" /> -->
+
+                            <field name="isDoctor" invisible="1"/>
+
+                            <field name="symptoms" placeholder="Describe the patient's symptoms..." readonly="isDoctor" />
+                        </group>
+                    </group>
+
+
+                    <group string="Fees">
+                        <field name="appointment_fees" />
+                        <field name="x_ray_fees" />
+                        <field name="chair_fees" />
+                        <field name="total_price" />
+                    </group>
+
+                    <notebook>
+                        <page string="💊 Medicines">
+                            <field name="medicine_line_ids">
+                                <tree editable="bottom" class="table table-striped table-hover table-bordered align-middle">
+                                    <field name="medicine_id" string="Medicine" class="fw-bold text-primary"/>
+                                    <field name="doze_per_day" string="Dose/Day" class="text-center"/>
+                                    <field name="quantity" string="Quantity" class="text-center"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_no_one"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="appointment_view_tree" model="ir.ui.view">
+        <field name="name">appointment.tree</field>
+        <field name="model">hospitalme.appointment</field>
+        <field name="arch" type="xml">
+            <tree decoration-danger="state == 'cancelled'" decoration-info="state == 'done'">
+                <field name="code" />
+                <field name="name" />
+                <field name="date" />
+                <field name="start_time" />
+                <field name="end_time" />
+                <field name="state" />
+                <field name="patient_id" />
+                <field name="doctor_id" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="appointment_action" model="ir.actions.act_window">
+        <field name="name">Appointments</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hospitalme.appointment</field>
+        <field name="view_mode">tree,form</field>
+        <field name="target">current</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiline_face">
+                create your first appointment !
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu Items -->
+
+    <menuitem id="appointment_menu_action" name="All Appointments" parent="appointment_submenu_root" action="appointment_action"/>
+
+</odoo>

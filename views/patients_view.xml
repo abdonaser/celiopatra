@@ -1,0 +1,159 @@
+<odoo>
+    <!-- ========== Patient Form View ========== -->
+    <record id="patientclient_view_form" model="ir.ui.view">
+        <field name="name">patientclient.form</field>
+        <field name="model">hospitalme.patientclient</field>
+        <field name="arch" type="xml">
+            <form string="patientclient">
+                <sheet>
+                    <!-- Main Content -->
+                    <div class="oe_title">
+                        <h1 class="fs-5">
+                            <label for="created_by" class="me-2"/>
+                            <field name="created_by" class="mx-3 o_required_modifier fs-5"/>
+                        </h1>
+
+                        <h1 class="fs-2">
+                            <label for="code" class="me-2"/>
+                            <field name="code" class="mx-3 o_required_modifier fs-5"/>
+                        </h1>
+                    </div>
+
+                    <!-- Patient Info -->
+                    <div class="d-flex align-items-center justify-content-between mb-3 p-2 rounded shadow-sm bg-light">
+                        <!-- Patient Name with Label -->
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="fw-bold w-25">Patient Name:</span>
+                            <field name="name" class="w-75 me-3"/>
+                        </div>
+                        <!-- Editable Image Field -->
+                        <div class="d-flex flex-column align-items-center">
+                            <field name="image_1920" widget="image" nolabel="1" class="border rounded mb-1" options="{'preview_image': 'image_1920', 'size': [150, 150]}" />
+                        </div>
+                    </div>
+                    <group string="Patient Information" class="o_group_col_6">
+                        <group>
+                            <field name="date_of_birth"/>
+                            <field name="age" readonly="1"/>
+                            <field name="gender"/>
+                            <field name="blood_type"/>
+                        </group>
+                        <group>
+                            <field name="country_id"/>
+                            <field name="state_id"/>
+                            <field name="national_id_number"/>
+                            <field name="doctor_id"/>
+                        </group>
+                    </group>
+                </sheet>
+
+                <!-- Chatter -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_no_one"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- ========== Patient Tree View ========== -->
+    <record id="patientclient_view_tree" model="ir.ui.view">
+        <field name="name">patientclient.tree</field>
+        <field name="model">hospitalme.patientclient</field>
+        <field name="arch" type="xml">
+            <tree string="All Patientclients" multi_edit="1">
+                <field name="image_1920" widget="image" class="oe_avatar" options="{'preview_image': 'image_1920', 'size': [32, 32]}"/>
+                <field name="created_by"/>
+                <field name="code" class="mx-3 o_required_modifier fs-5"/>
+                <field name="name"/>
+                <field name="date_of_birth"/>
+                <field name="age"/>
+                <field name="gender"/>
+                <field name="blood_type"/>
+                <field name="country_id"/>
+                <field name="state_id"/>
+                <field name="national_id_number"/>
+                <field name="doctor_id"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <!-- patient search View -->
+    <record id="patientclient_view_search" model="ir.ui.view">
+        <field name="name">patientclient.search</field>
+        <field name="model">hospitalme.patientclient</field>
+        <field name="arch" type="xml">
+            <search string="Search Patient Clients">
+                <!-- Basic searchable fields -->
+                <field name="name" />
+                <field name="created_by" />
+
+                <!-- Filters (predefined searches) -->
+                <filter name="state_id" string="In Cairo" domain="[('state_id.name', '=', 'Cairo')]"/>
+
+                <!-- Group By Filters -->
+                <filter name="created_by" string="Created By" context='{"group_by":"created_by"}'/>
+            </search>
+        </field>
+    </record>
+    <!-- ========== Patient Action ========== -->
+    <!-- all patients -->
+    <record id="patientclient_action" model="ir.actions.act_window">
+        <field name="name">Patient Clients</field>
+        <field name="res_model">hospitalme.patientclient</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="target">current</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smile">
+                <strong>🧑‍⚕️ No patient clients yet.</strong>
+                <br/>
+                Create your first patient client to start managing medical records.<br/>
+                Click <b>Create</b> to begin!
+        </p>
+    </field>
+</record>
+
+    <!-- Male Patients -->
+    <record id="patientclient_male_action" model="ir.actions.act_window">
+        <field name="name">Male Patients</field>
+        <field name="res_model">hospitalme.patientclient</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('gender', '=', 'male')]</field>
+        <field name="target">current</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smile">
+                <strong>🧑‍⚕️ No patient clients yet.</strong>
+                <br/>
+                Create your first patient client to start managing medical records.<br/>
+                Click <b>Create</b> to begin!
+            </p>
+        </field>
+    </record>
+
+    <!-- Femal Patients -->
+    <record id="patientclient_female_action" model="ir.actions.act_window">
+        <field name="name">Female Patients</field>
+        <field name="res_model">hospitalme.patientclient</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('gender', '=', 'female')]</field>
+        <field name="target">current</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smile">
+                <strong>🧑‍⚕️ No patient clients yet.</strong>
+                <br/>
+                Create your first patient client to start managing medical records.<br/>
+                Click <b>Create</b> to begin!
+            </p>
+        </field>
+    </record>
+    <!-- ========== Menu Item ========== -->
+    <menuitem id="patient_menu_action" name="Patient" parent="patient_submenu_root" action="patientclient_action"/>
+    <menuitem id="male_patient_menu_action" name="Male Patients" parent="patient_submenu_root" action="patientclient_male_action"/>
+    <menuitem id="female_patient_menu_action" name="Female Patients" parent="patient_submenu_root" action="patientclient_female_action"/>
+
+</odoo>

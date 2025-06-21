@@ -1,0 +1,48 @@
+<odoo>
+    <!-- ========= -->
+    <!-- Record Rules -->
+    <!-- ========= -->
+<!-- ======================== -->
+<!-- Patient Model -->
+<!-- ======================== -->
+
+    <!-- Gender Match Rule-->
+<!--     <record id="gender_match_hospital_rule" model="ir.rule">
+        <field name="name">Match Gender Rule</field>
+        <field name="model_id" ref="celiopatra_system.model_hospitalme_patientclient"/>
+        <field name="domain_force">[('gender', '=', user.gender)]</field>
+        <field name="groups" eval="[
+            (4, ref('celiopatra_system.manager_user_hospital_group')),
+            (4, ref('celiopatra_system.general_user_hospital_group')),
+            ]"/>
+    </record> -->
+
+    <!-- CreationBy Match Rule -->
+    <record id="created_by_match_hospital_rule" model="ir.rule">
+        <field name="name">Created By Rule</field>
+        <field name="model_id" ref="celiopatra_system.model_hospitalme_patientclient"/>
+        <field name="domain_force">[('create_uid.id', '=', user.id)]</field>
+      <field name="groups" eval="[
+            (4, ref('celiopatra_system.manager_user_hospital_group')),
+            (4, ref('celiopatra_system.general_user_hospital_group')),
+            ]"/>
+    </record>
+
+
+
+
+<!-- ======================== -->
+<!-- Department Model -->
+<!-- ======================== -->
+    <!-- department_responsible_group -->
+    <record id="rule_department_responsible" model="ir.rule">
+        <field name="name">Department Responsible Rule</field>
+        <field name="model_id" ref="celiopatra_system.model_hospitalme_department"/>
+        <field name="domain_force">[('responsible_doctor_id', '=', user.doctor_id.id)]</field>
+        <field name="groups" eval="[
+            (4, ref('celiopatra_system.manager_user_hospital_group')),
+            (4, ref('celiopatra_system.general_user_hospital_group')),
+            ]"/>
+    </record>
+
+</odoo>

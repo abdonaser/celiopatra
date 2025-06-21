@@ -1,0 +1,136 @@
+<odoo>
+    <!-- hospitalme_patientclient -->
+    <record id="paperformat_patientclient_report" model="report.paperformat">
+        <field name="name">Patient</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">30</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">40</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <template id="layout_patientclient_report">
+        <div class="header"
+            style="
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: start;
+                ">
+
+           <!--  <div
+                class="header-image"
+                style="
+                    border: 1px solid;
+                    padding: 2px;
+                    height: 100px;
+                    width: 100px;
+                    margin-bottom: 10px;
+                    ">
+                <img t-att-src="'/celiopatra_system/static/src/img/hospital.png'" style="width: 100%; height: 100%;" />
+
+            </div> -->
+            <h1 style="font-size: 21px; color: #b92c7b; text-align: center;padding: 13px 0;font-weight: revert;">Hospital Management System</h1>
+        </div>
+        <div class="article" style="padding-top: 5px;">
+            <t t-raw="0"/>
+        </div>
+        <div class="footer">
+           <!-- Report Footer -->
+            <div class="report-footer">
+                <p>Hospital Management System | Contact: info@hospital.com</p>
+            </div>
+        </div>
+    </template>
+
+    <template id="template_patientclient_report">
+        <t t-call="web.html_container">
+            <t t-call="celiopatra_system.layout_patientclient_report">
+                <!-- Correct way to include CSS -->
+                <t t-call-assets="web.report_assets_common" t-js="false"/>
+
+                <div class="page">
+                    <!-- Report Header -->
+                    <div class="report-header">
+                        <h1>Patient Information Report</h1>
+                        <p>Generated on <t t-esc="time.strftime('%Y-%m-%d')"/></p>
+                    </div>
+
+                    <!-- Patient Information -->
+                    <t t-foreach="docs" t-as="doc">
+                        <div class="report-sub-header">
+                             <h1>Personel Info</h1>
+                        </div>
+                        <div class="patient-info">
+                            <!-- <div class="info-box">
+                                <img t-att-src="'/web/image?model=hospitalme.patientclient&amp;id=' + str(doc.id) + '&amp;field=image_1920'" style="width: 120px; height: 120px; object-fit: cover;" />
+                            </div> -->
+                            <div class="info-box">
+                                <label>Patient Name:</label>
+                                <span><t t-esc="doc.name"/></span>
+                            </div>
+                            <div class="info-box">
+                                <label>Gender:</label>
+                                <span><t t-esc="doc.gender or 'N/A'"/></span>
+                            </div>
+                            <div class="info-box">
+                                <label>Country:</label>
+                                <span><t t-esc="doc.country_id.name or 'N/A'"/></span>
+                            </div>
+                            <div class="info-box">
+                                <label>State:</label>
+                                <span><t t-esc="doc.state_id.name or 'N/A'"/></span>
+                            </div>
+                            <div class="info-box">
+                                <label>Age :</label>
+                                <span><t t-esc="doc.age or 'N/A'"/></span>
+                            </div>
+                            <div class="info-box">
+                                <label>National ID :</label>
+                                <span><t t-esc="doc.national_id_number or 'N/A'"/></span>
+                            </div>
+                        </div>
+                        <div class="report-sub-header">
+                             <h1>Medical Info</h1>
+                        </div>
+                        <div class="patient-info">
+                            <div class="info-box">
+                                <label>Blood Type:</label>
+                                <span><t t-esc="doc.blood_type or 'N/A'"/></span>
+                            </div>
+                            <div class="info-box">
+                                <label>Insurance Policy Number :</label>
+                                <span><t t-esc="doc.insurance_policy_number or 'N/A'"/></span>
+                            </div>
+                            <div class="info-box">
+                                <label>Doctor :</label>
+                                <span><t t-esc="doc.doctor_id.name or 'N/A'"/></span>
+                            </div>
+                        </div>
+                    </t>
+
+
+                </div>
+            </t>
+        </t>
+    </template>
+
+
+    <record id="action_patientclient_report" model="ir.actions.report">
+        <field name="name">Patient Report</field>
+        <field name="model">hospitalme.patientclient</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">celiopatra_system.template_patientclient_report</field>
+        <field name="report_file">celiopatra_system.template_patientclient_report</field>
+        <field name="print_report_name">'Patient - %s' % object.name</field>
+        <field name="binding_model_id" ref="model_hospitalme_patientclient"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="celiopatra_system.paperformat_patientclient_report"/>
+        <field name="multi">True</field>
+    </record>
+</odoo>

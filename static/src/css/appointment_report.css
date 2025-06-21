@@ -1,0 +1,97 @@
+/* General container styling */
+.report-container {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  margin: 30px;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  border: 1px solid black;
+  
+}
+
+/* Report title */
+.report-title {
+  color: #1a3c5e;
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 25px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Section headers */
+.section-header {
+  font-size: 18px;
+  color: #1a3c5e;
+  margin: 30px 0 15px;
+  font-weight: 500;
+  border-left: 4px solid #3498db;
+  padding-left: 10px;
+}
+
+/* Table styling */
+.table-report {
+  width: 100%;
+  border-collapse: separate;
+  margin-bottom: 20px;
+  background-color: #fff;
+}
+
+/* Table headers */
+.table-report th {
+  background-color: #ecf0f1;
+  color: #2c3e50;
+  font-weight: 600;
+  padding: 12px;
+  text-align: left;
+  border-bottom: 2px solid #bdc3c7;
+}
+
+/* Table cells */
+.table-report td {
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  vertical-align: top;
+  font-size: 14px;
+  color: #34495e;
+}
+
+/* Highlighted labels */
+.highlight {
+  font-weight: 600;
+  color: #2980b9;
+  background-color: #f9f9f9;
+}
+
+/* No data styling */
+.no-data {
+  color: #7f8c8d;
+  font-style: italic;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Hover effect for table rows */
+.table-report tbody tr:hover {
+  background-color: #f5f7fa;
+}
+
+/* Emoji alignment */
+.section-header::before,
+.subsection-header::before {
+  margin-right: 8px;
+}
+
+/* Responsive adjustments for PDF */
+@media print {
+  .report-container {
+    box-shadow: none;
+    margin: 10px;
+    padding: 10px;
+  }
+  .table-report {
+    page-break-inside: avoid;
+  }
+}

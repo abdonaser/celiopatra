@@ -1,0 +1,65 @@
+<odoo>
+
+    <record id="room_view_form" model="ir.ui.view">
+        <field name="name">hospitalme.room.form</field>
+        <field name="model">hospitalme.room</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <header>
+                        <field name="state" widget="statusbar" nolables="1" options="{'clickable':'1'}" />
+                    </header>
+                </header>
+                <sheet string="Patient">
+                    <div class="oe_title">
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1 class="fs-3">
+                                <field name="name" placeholder="Room Title"/>
+                            </h1>
+                        </div>
+                    </div>
+                    <group>
+                        <field name="bed_count"/>
+                        <field name="occupied_bed_count"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_no_ne"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+     <record id="room_view_tree" model="ir.ui.view">
+        <field name="name">vhospitalme.room.tree</field>
+        <field name="model">hospitalme.room</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom" class="table table-striped table-hover table-bordered">
+                <field name="name"/>
+                <field name="bed_count"/>
+                <field name="occupied_bed_count"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="all_room_action" model="ir.actions.act_window">
+        <field name="name">Room</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hospitalme.room</field>
+        <field name="view_mode">tree,form</field>
+        <field name="target">current</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                create your first room !
+            </p>
+        </field>
+    </record>
+
+    <!-- Room Menu Items -->
+    <menuitem id="room_menu_action" name="All Rooms" parent="room_submenu_root" action="all_room_action"/>
+
+</odoo>

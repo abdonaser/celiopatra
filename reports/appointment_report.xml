@@ -1,0 +1,85 @@
+<odoo>
+    <record id="appointment_report" model="ir.actions.report">
+        <field name="name">Appointment Report</field>
+        <field name="model">hospitalme.appointment</field>
+        <field name="report_type">qweb-html</field>
+        <field name="binding_model_id" ref="model_hospitalme_appointment"/>
+        <field name="binding_type">report</field>
+        <field name="report_name">celiopatra_system.appointment_report_template</field>
+    </record>
+
+    <template id="appointment_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.basic_layout">
+                    <link rel="stylesheet" href="/celiopatra_system/static/src/css/appointment_report.css"/>
+
+                    <div class="report-container">
+                        <h1 class="report-title">📝 Appointment Details Report</h1>
+
+                        <!-- General Information -->
+                        <div class="section-header">🏥 General Information</div>
+                        <table class="table-report">
+                            <thead>
+                                <tr>
+                                    <th colspan="4">General Info</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="highlight">Appointment Name</td>
+                                    <td><t t-esc="o.name or 'N/A'" /></td>
+                                    <td class="highlight">Appointment Date</td>
+                                    <td><t t-esc="o.date or 'N/A'" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="highlight">Doctor Name</td>
+                                    <td><t t-esc="o.doctor_id.name or 'N/A'" /></td>
+                                    <td class="highlight">Patient Name</td>
+                                    <td><t t-esc="o.patient_id.name or 'N/A'" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="highlight">State</td>
+                                    <td><t t-esc="o.state or 'N/A'" /></td>
+                                    <td class="highlight">Price</td>
+                                    <td>
+                                        <t t-esc="o.total_price" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Medicines -->
+                        <div class="section-header">💊 Medicines Details</div>
+                        <table class="table-report">
+                            <thead>
+                                <tr>
+                                    <th>Medicine Name</th>
+                                    <th>Quantity</th>
+                                    <th>Dosage/Day</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-if="o.medicine_line_ids">
+                                    <t t-foreach="o.medicine_line_ids" t-as="line">
+                                        <tr>
+                                            <td><t t-esc="line.medicine_id.name or 'N/A'" /></td>
+                                            <td><t t-esc="line.quantity or 'N/A'" /></td>
+                                            <td><t t-esc="line.doze_per_day or 'N/A'" /></td>
+                                        </tr>
+                                    </t>
+                                </t>
+                                <t t-if="not o.medicine_line_ids">
+                                    <tr>
+                                        <td colspan="3" class="no-data">No medicine details available</td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

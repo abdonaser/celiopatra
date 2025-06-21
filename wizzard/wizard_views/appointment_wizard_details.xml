@@ -1,0 +1,49 @@
+<odoo>
+       <!-- Wizard Form View -->
+    <record id="appointment_wizard_details_form_view" model="ir.ui.view">
+        <field name="name">hospitalme.appointment.wizard.details.form</field>
+        <field name="model">hospitalme.appointment.wizard.details</field>
+        <field name="arch" type="xml">
+            <form string="Appointment Wizard">
+                <sheet>
+                    <group>
+                        <separator string="Appointment Info" colspan="2"/>
+                        <field name="appointment" string="Appointment Name" readonly="1"/>
+
+                        <group class="w-100  d-flex g-3 justify-content-center align-items-center"  >
+                            <button name="show_doctor_details"
+                                    string="View Doctor"
+                                    type="object"
+                                    class="oe_stat_button border border-teal"
+                                    icon="fa-user-md"/>
+                            <button name="show_patient_details"
+                                    string="View Patient"
+                                    type="object"
+                                    class="oe_stat_button border border-primary"
+                                    icon="fa-user"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button
+                            name="print_appointment_report"
+                            string="Print Appointment"
+                            type="object"
+                            class="oe_highlight"
+                            icon="fa-print"
+                        />
+                    <button special="cancel" string="Close" class="btn-secondary" data-hotkey="c"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Wizard Action -->
+    <record id="appointment_wizard_details_action" model="ir.actions.act_window">
+        <field name="name">Appointment Details</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hospitalme.appointment.wizard.details</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

@@ -1,0 +1,24 @@
+<odoo>
+    <data>
+        <!-- Main module menu -->
+        <menuitem id="celio_menu_root" name="🏥 celioSystem" sequence="1"/>
+
+        <!--=========================== Staff Section (1st) -->
+        <menuitem id="staff_submenu_root" name="👨‍⚕️ Staff" parent="celio_menu_root" sequence="10"/>
+        <menuitem id="patient_submenu_root" name="🧑‍⚕️ Patients" parent="staff_submenu_root" sequence="10"/>
+        <menuitem id="doctor_submenu_root" name="👨‍⚕️ Doctors" parent="staff_submenu_root" sequence="20"/>
+
+        <!--=========================== Departments (2nd) -->
+        <menuitem id="department_submenu_root" name="🏢 Departments" parent="celio_menu_root" sequence="20"/>
+
+        <!--=========================== Appointments (3rd) -->
+        <menuitem id="appointment_submenu_root" name="📅 Appointments" parent="celio_menu_root" sequence="30"/>
+
+        <!--=========================== Rooms (4th) -->
+        <menuitem id="room_submenu_root" name="🚪 Rooms" parent="celio_menu_root" sequence="40"/>
+
+        <!--=========================== Medicines (Optional) -->
+        <menuitem id="medicines_submenu_root" name="💊 Medicines" parent="celio_menu_root" sequence="50"/>
+
+    </data>
+</odoo>

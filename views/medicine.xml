@@ -1,0 +1,61 @@
+<odoo>
+    <record id="medicine_view_form" model="ir.ui.view">
+        <field name="name">medicine.form</field>
+        <field name="model">hospitalme.medicine</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1 class="fs-2">
+                            <label for="code" class="me-2"/>
+                            <field name="code" class="mx-3 o_required_modifier fs-5"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="name" />
+                        <field name="expiration_date" />
+                        <field name="description" />
+                        <field name="price" />
+                    </group>
+                </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_no_one"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="medicine_view_tree" model="ir.ui.view">
+        <field name="name">medicine.tree</field>
+        <field name="model">hospitalme.medicine</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="expiration_date" />
+                <field name="description" />
+                <field name="price" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="medicine_action" model="ir.actions.act_window">
+        <field name="name">Medicines</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hospitalme.medicine</field>
+        <field name="view_mode">tree,form</field>
+        <field name="target">current</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiline_face">
+                create your first medicine !
+            </p>
+        </field>
+    </record>
+
+    <!-- Medicines Menu Item -->
+
+    <menuitem id="hospitalme_medicine_menu" name="💊 Medicines" sequence="10" parent="medicines_submenu_root" action="medicine_action"/>
+
+</odoo>

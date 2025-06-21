@@ -1,0 +1,38 @@
+<odoo>
+    <!-- Celiopatra categories -->
+    <!-- main Category -->
+    <record id="celiopatra_category" model="ir.module.category">
+        <field name="name">Celiopatra System</field>
+        <field name="description">Category for managing Celiopatra System related permissions and access rights.</field>
+        <field name="sequence">10</field>
+    </record>
+
+<!-- ====================== -->
+    <!-- Groups -->
+<!-- ====================== -->
+
+    <!-- Group:  Super users Group -->
+    <record id="super_user_hospital_group" model="res.groups">
+        <field name="name">Super Group</field>
+        <field name="category_id" ref="celiopatra_system.celiopatra_category" />
+    </record>
+
+    <!-- Group:  Manager User Hospital Group-->
+    <record id="manager_user_hospital_group" model="res.groups">
+        <field name="name">Manager Group</field>
+        <field name="category_id" ref="celiopatra_system.celiopatra_category" />
+    </record>
+
+    <!-- Group: General User Group -->
+    <record id="general_user_hospital_group" model="res.groups">
+        <field name="name">General Group</field>
+        <field name="category_id" ref="celiopatra_system.celiopatra_category" />
+    </record>
+
+    <!-- Group: General User Group -->
+     <record id="doctor_hospital_group" model="res.groups">
+            <field name="name">Doctor Group</field>
+            <field name="category_id" ref="celiopatra_system.celiopatra_category"/>
+    </record>
+
+</odoo>

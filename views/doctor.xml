@@ -1,0 +1,171 @@
+<odoo>
+    <!-- ========== Doctor Form View ========== -->
+    <record id="doctor_view_form" model="ir.ui.view">
+        <field name="name">doctor.form</field>
+        <field name="model">hospitalme.doctor</field>
+        <field name="arch" type="xml">
+            <form string="Doctor">
+                <sheet>
+                    <group class="o_group_col_4">
+                        <group>
+                            <field name="created_by" string="Created By" class="mx-3 o_required_modifier"/>
+                        </group>
+                        <group>
+                            <field name="code" string="Doctor Code" class="mx-3 o_required_modifier fs-5"/>
+                        </group>
+                    </group>
+
+                    <!-- Doctor Information -->
+                    <div class="d-flex align-items-center justify-content-between mb-3 p-2 rounded shadow-sm bg-light">
+                        <!-- Doctor Name with Label -->
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="fw-bold w-25">Doctor Name:</span>
+                            <field name="name" class="w-75 me-3"/>
+                        </div>
+                        <!-- Editable Image Field -->
+                        <div class="d-flex flex-column align-items-center">
+                            <field name="image_1920" widget="image" nolabel="1" class="border rounded mb-1" options="{'preview_image': 'image_1920', 'size': [150, 150]}" />
+                        </div>
+                    </div>
+                    <group string="Doctor Information" class="o_group_col_6">
+
+                        <group>
+                            <field name="specialization"/>
+                            <field name="license_number"/>
+                            <field name="department_id"/>
+                        </group>
+                        <group>
+                            <field name="mobile"/>
+                            <field name="email"/>
+                            <field name="gender"/>
+                            <field name="country_id"/>
+                            <field name="state_id"/>
+                        </group>
+                    </group>
+
+                    <!-- Availability -->
+                    <group string="Availability" class="o_group_col_6">
+                        <group>
+                            <field name="available_from" widget="datetime" options="{'format': 'HH:mm'}" placeholder="HH:MM"/>
+                            <field name="available_to" widget="datetime" options="{'format': 'HH:mm'}" placeholder="HH:MM"/>
+                        </group>
+                        <group>
+                            <field name="is_available" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <!-- Related Patients -->
+                    <notebook>
+                        <page string="👥 Patients">
+                            <field name="patient_ids">
+                                <tree editable="bottom" class="table table-striped table-hover table-bordered">
+                                    <field name="image_1920" widget="image" options="{'preview_image': 'image_1920', 'size': [50, 50]}" />
+                                    <field name="name"/>
+                                    <field name="date_of_birth"/>
+                                    <field name="age"/>
+                                    <field name="country_id"/>
+                                    <field name="state_id"/>
+                                    <field name="national_id_number"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+
+                <!-- Chatter -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_no_one"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- ========== Tree Views ========== -->
+
+    <record id="all_doctor_view_tree" model="ir.ui.view">
+        <field name="name">doctor.tree.all</field>
+        <field name="model">hospitalme.doctor</field>
+        <field name="arch" type="xml">
+            <tree string="👨‍⚕️ All Doctors">
+                <field name="image_1920" widget="image" class="oe_avatar" options="{'preview_image': 'image_1920', 'size': [32, 32]}"/>
+                <field name="name"/>
+                <field name="specialization"/>
+                <field name="license_number"/>
+
+                <field name="department_id"/>
+                <field name="mobile" optional="1"/>
+                <field name="email" optional="1"/>
+                <field name="gender"/>
+                <field name="available_from"/>
+                <field name="available_to"/>
+                <field name="is_available"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="available_doctor_view_tree" model="ir.ui.view">
+        <field name="name">doctor.tree.available</field>
+        <field name="model">hospitalme.doctor</field>
+        <field name="arch" type="xml">
+            <tree string="🟢 Available Doctors">
+                <field name="image_1920" widget="image" class="oe_avatar" options="{'preview_image': 'image_1920', 'size': [32, 32]}"/>
+                <field name="name"/>
+                <field name="specialization"/>
+                <field name="license_number"/>
+                <field name="department_id"/>
+                <field name="mobile" optional="1"/>
+                <field name="email" optional="1"/>
+                <field name="available_from"/>
+                <field name="available_to"/>
+                <field name="is_available"/>
+
+            </tree>
+        </field>
+    </record>
+
+    <!-- ========== Actions ========== -->
+
+    <record id="all_doctors_action" model="ir.actions.act_window">
+        <field name="name">All Doctors</field>
+        <field name="res_model">hospitalme.doctor</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+        <field name="target">current</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smile">
+                <strong>👨‍⚕️ No doctors found.</strong>
+                <br/>
+                Start by creating your first doctor record!
+                <br/>
+                Click the <b>Create</b> button to add a new doctor to your hospital system.
+            </p>
+        </field>
+    </record>
+
+    <record id="available_doctors_action" model="ir.actions.act_window">
+        <field name="name">Available Doctors</field>
+        <field name="res_model">hospitalme.doctor</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('is_available', '=', True)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smile">
+                <strong>🟢 No available doctors at the moment.</strong>
+                <br/>
+                All our doctors are currently busy or unavailable.<br/>
+                Please check back soon, or contact our support for urgent assistance.
+            </p>
+        </field>
+    </record>
+
+    <!-- ========== Menus ========== -->
+
+    <menuitem id="doctor_menu_action" name="Doctors" parent="doctor_submenu_root" action="all_doctors_action"/>
+
+    <record id="available_doctor_menu_action" model="ir.ui.menu">
+        <field name="name">Available Doctors</field>
+        <field name="parent_id" ref="doctor_submenu_root"/>
+        <field name="action" ref="available_doctors_action"/>
+    </record>
+</odoo>
